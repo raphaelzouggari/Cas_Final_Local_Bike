@@ -1,0 +1,157 @@
+version: 2
+
+models:
+  - name: stg_local_bike__brands
+    description: This model contains information about brand
+    columns:
+      - name: brand_id
+        description: Primary key - This is a unique identifier for the brand
+        tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__categories
+    description: This model contains information about product category
+    columns:
+      - name: category_id
+        description: Primary key - This is a unique identifier for the category
+        tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__customers
+    description: This model contains information about customers
+    columns:
+      - name: customer_id
+        description: Primary key - This is a unique identifier for the customer
+        tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__order_items
+    description: This model contains information about products in each order
+    columns:
+      - name: order_item_id
+        description: Primary key - This is a unique identifier for the order_item -> composed of order_id and item_id
+        tests: 
+          - unique
+          - not_null
+      - name: order_id
+        description: Foreign key -> reference to order table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__orders')
+                field: order_id
+      - name: product_id
+        description: Foreign key -> reference to product table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__products')
+                field: product_id
+      - name: total_amount_order
+        description: Calculated field -> price of the product = (price * quantity) - (price * quantity * discount)
+
+  - name: stg_local_bike__orders
+    description: This model contains information about orders
+    columns:
+      - name: order_id
+        description: Primary key - This is a unique identifier for the order
+        tests: 
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: Foreign key - The user who performed the order -> reference to customer table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_customers')
+                field: customer_id
+          
+      - name: store_id
+        description: Foreign key - The store where the sell take place
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_stores')
+                field: store_id
+        
+      - name: staff_id
+        description: Foreign key - The personal staff in the store
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike_staffs')
+                field: staff_id
+
+      - name: order_status
+        description: Described the status of the order. Value among a listed values.
+        tests:
+          - accepted_values:
+              arguments:
+                name: accepted_values_order_status
+                values: [1,2,3,4]
+                quote: false
+
+  - name: stg_local_bike__products
+    description: This model contains information about products
+    columns:
+      - name: product_id
+        description: Primary key - This is a unique identifier for the product
+        tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__staffs
+    description: This model contains information about staff people
+    columns:
+      - name: staff_id
+        description: Primary key - This is a unique identifier for the staff
+        tests: 
+          - unique
+          - not_null
+
+      - name: staff_store_id
+        description: Foreign key -> reference to store table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__stores')
+                field: store_id
+
+
+  - name: stg_local_bike__stocks
+    description: This model contains information about stocks (by store and product)
+    columns:
+      - name: stock_id
+        description: Primary key - This is a unique identifier for the stock -> composed of store_id and product_id
+        tests: 
+          - unique
+          - not_null
+
+      - name: stock_store_id
+        description: Foreign key -> reference to store table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__stores')
+                field: store_id
+
+      - name: stock_product_id
+        description: Foreign key -> reference to product table
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__products')
+                field: product_id
+
+  - name: stg_local_bike__stores
+    description: This model contains information about stores
+    columns:
+      - name: store_id
+        description: Primary key - This is a unique identifier for the store
+        tests: 
+          - unique
+          - not_null
