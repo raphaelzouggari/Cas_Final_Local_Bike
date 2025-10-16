@@ -1,0 +1,184 @@
+version: 2
+
+models:
+  - name: stg_local_bike__brands
+    description: This model contains information about brand
+    columns:
+      - name: brand_id
+        description: Primary key - This is a unique identifier for the brand
+        data_tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__categories
+    description: This model contains information about product category
+    columns:
+      - name: category_id
+        description: Primary key - This is a unique identifier for the category
+        data_tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__customers
+    description: This model contains information about customers
+    columns:
+      - name: customer_id
+        description: Primary key - This is a unique identifier for the customer
+        data_tests: 
+          - unique
+          - not_null
+
+  - name: stg_local_bike__order_items
+    description: This model contains information about products in each order
+    columns:
+      - name: order_item_id
+        description: Primary key - This is a unique identifier for the order_item -> composed of order_id and item_id
+        data_tests: 
+          - unique
+          - not_null
+      - name: order_id
+        description: Foreign key -> reference to order table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__orders')
+                field: order_id
+      - name: product_id
+        description: Foreign key -> reference to product table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_local_bike__products')
+                field: product_id
+      - name: total_amount_order
+        description: Calculated field -> price of the product = (price * quantity) - (price * quantity * discount)
+
+
+
+
+  - name: stg_sales_database__order
+    description: This model contains information about orders
+    columns:
+      - name: order_id
+        description: Primary key - This is a unique identifier for the order
+        data_tests: 
+          - unique
+          - not_null
+
+      - name: user_id
+        description: Foreign key - The user who performed the order -> reference to user table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__user')
+                field: user_id
+
+      - name: order_status
+        description: Described the status of the order. Value among a listed values.
+        data_tests:
+          - accepted_values:
+              arguments:
+                name: accepted_values_order_status
+                values: ['approved', 'canceled', 'created', 'delivered', 'invoiced', 'processing', 'shipped', 'unavailable']
+
+
+  - name: stg_sales_database__feedback
+    description: This model contains information about feedback (feedback score per order)
+    columns:
+      - name: unique_feedback
+        description: Primary key - This is a unique identifier for the feedback -> composed of feedback_id and order_id
+        data_tests: 
+          - unique
+          - not_null
+
+      - name: order_id
+        description: Foreign key -> reference to order table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__order')
+                field: order_id
+
+
+  - name: stg_sales_database__order_item
+    description: This model contains information about products in each order
+    columns:
+      - name: unique_order
+        description: Primary key - This is a unique identifier for the order_item -> composed of order_id and product_id
+        data_tests: 
+          - unique
+          - not_null
+      - name: order_id
+        description: Foreign key -> reference to order table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__order')
+                field: order_id
+      - name: product_id
+        description: Foreign key -> reference to product table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__product')
+                field: product_id
+      - name: seller_id
+        description: Foreign key -> reference to seller table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__seller')
+                field: seller_id
+      - name: total_order_item_amount
+        description: Calculated field -> price of the product = (price * quantity) + shipping_cost
+
+
+  - name: stg_sales_database__payment
+    description: This model contains information about payment (type, date)
+    columns:
+      - name: unique_payment
+        description: Primary key - This is a unique identifier for the payment -> composed of order_id and payment_sequential
+        data_tests: 
+          - unique
+          - not_null
+      - name: order_id
+        description: Foreign key -> reference to order table
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales_database__order')
+                field: order_id
+
+
+  - name: stg_sales_database__product
+    description: This model contains information about product (weight, size)
+    columns:
+      - name: product_id
+        description: Primary key - This is a unique identifier for the product
+        data_tests: 
+          - unique
+          - not_null
+      - name: volume_cm3
+        description: calculated field -> volume of the product in cm3 = product_length_cm*product_height_cm*product_width_cm
+
+
+  - name: stg_sales_database__seller
+    description: This model contains information about seller
+    columns:
+      - name: seller_id
+        description: Primary key - This is a unique identifier for the seller
+        data_tests: 
+          - unique
+          - not_null
+
+
+  - name: stg_sales_database__user
+    description: This model contains information about user
+    columns:
+      - name: user_id
+        description: Primary key - This is a unique identifier for the user
+        data_tests: 
+          - unique
+          - not_null
+
+
