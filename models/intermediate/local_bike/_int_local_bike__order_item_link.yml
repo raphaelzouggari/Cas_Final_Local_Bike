@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_local_bike__order_item_link
+    description: Join table between order and order_item to refactor SQL code, and centralize a common query
+
+    columns:
+      - name: order_item_id
+        description: Primary key - This is a unique identifier for the order_item_link int table
+        data_tests: 
+          - unique
+          - not_null

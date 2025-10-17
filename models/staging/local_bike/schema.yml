@@ -9,6 +9,13 @@ models:
         tests: 
           - unique
           - not_null
+      - name: brand_name
+        description: Described the name of the brand. Value among a listed values (in dbt_project.yml file).
+        tests:
+          - accepted_values:
+              arguments:
+                name: accepted_values_brand_name
+                values: "{{ var('brand_available') }}"
 
   - name: stg_local_bike__categories
     description: This model contains information about product category
@@ -18,6 +25,13 @@ models:
         tests: 
           - unique
           - not_null
+      - name: category_name
+        description: Described the name of the category. Value among a listed values (in dbt_project.yml file).
+        tests:
+          - accepted_values:
+              arguments:
+                name: accepted_values_category_name
+                values: "{{ var('category_available') }}"
 
   - name: stg_local_bike__customers
     description: This model contains information about customers
@@ -67,23 +81,23 @@ models:
         tests:
           - relationships:
               arguments:
-                to: ref('stg_local_bike_customers')
+                to: ref('stg_local_bike__customers')
                 field: customer_id
           
-      - name: store_id
+      - name: order_store_id
         description: Foreign key - The store where the sell take place
         tests:
           - relationships:
               arguments:
-                to: ref('stg_local_bike_stores')
+                to: ref('stg_local_bike__stores')
                 field: store_id
         
-      - name: staff_id
+      - name: order_staff_id
         description: Foreign key - The personal staff in the store
         tests:
           - relationships:
               arguments:
-                to: ref('stg_local_bike_staffs')
+                to: ref('stg_local_bike__staffs')
                 field: staff_id
 
       - name: order_status

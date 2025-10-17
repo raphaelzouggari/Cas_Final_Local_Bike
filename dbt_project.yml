@@ -36,6 +36,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 
+vars:
+  brand_available: ['Electra', 'Haro', 'Heller', 'Pure Cycles', 'Ritchey', 'Strider', 'Sun Bicycles', 'Surly', 'Trek']
+  category_available: ['Children Bicycles', 'Comfort Bicycles', 'Cruisers Bicycles', 'Cyclocross Bicycles', 'Electric Bikes', 'Mountain Bikes', 'Road Bikes']
+
+
+
 models:
   +persist_docs:
     relation: true
