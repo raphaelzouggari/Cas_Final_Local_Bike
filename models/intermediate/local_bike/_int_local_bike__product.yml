@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_local_bike__product
+    description: '{{ doc("int_local_bike__product") }}'
+
+    columns:
+      - name: product_id
+        description: Primary key - This is a unique identifier for the product int table
+        data_tests: 
+          - unique
+          - not_null

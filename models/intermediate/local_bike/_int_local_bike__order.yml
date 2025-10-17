@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int_sales_database__order
+  - name: int_local_bike__order
     description: '{{ doc("int_local_bike__order") }}'
 
     columns:
