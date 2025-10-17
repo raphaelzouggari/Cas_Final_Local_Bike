@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_local_bike__customer
+    description: '{{ doc("int_local_bike__customer") }}'
+
+    columns:
+      - name: customer_id
+        description: Primary key - This is a unique identifier for the customer intermediate table
+        data_tests: 
+          - unique
+          - not_null
