@@ -8,16 +8,6 @@ Several calculated columns are described as :
  - **total_gross_amount_order** : total amount of the order
 
 
-    CONCAT(order_id, '_', customer_id, '_', product_name, '_', category_name) as unique_order,
-    order_id, customer_id,
-    order_date,
-    order_store_id,
-    product_name,
-    category_name,
-    brand_name,
-    SUM(product_quantity) AS total_product_quantity,
-    SUM(total_gross_amount_order) AS total_gross_amount_order
-
 We retrieve also several information about the product (category, brand)
 
 {% enddocs %}
