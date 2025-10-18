@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: mrt_local_bike__store_report
+    description: '{{ doc("mrt_local_bike__store_report") }}'
+
+    columns:
+      - name: unique_staff
+        description: Primary key - This is a unique identifier for the staff and store mart table - composed of order_id, staff_name
+        data_tests: 
+          - unique
+          - not_null
+
