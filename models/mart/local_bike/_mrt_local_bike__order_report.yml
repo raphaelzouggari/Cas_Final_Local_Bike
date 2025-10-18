@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: mrt_local_bike__order_report
+    description: '{{ doc("mrt_local_bike__order_report") }}'
+
+    columns:
+      - name: unique_order
+        description: Primary key - This is a unique identifier for the order mart table - composed of order_id, customer_id, product_name, category_name
+        data_tests: 
+          - unique
+          - not_null
+

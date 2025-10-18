@@ -16,6 +16,7 @@ WITH ventes AS (
     JOIN {{ ref('int_local_bike__product') }} product ON orderitem.product_id = product.product_id
 )
 SELECT
+    CONCAT(order_id, '_', customer_id, '_', product_name, '_', category_name) as unique_order,
     order_id, customer_id,
     order_date,
     order_store_id,
