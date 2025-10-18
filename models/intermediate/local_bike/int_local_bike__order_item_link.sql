@@ -2,10 +2,11 @@
 SELECT 
   orderitem.order_item_id,
   orderitem.order_id,
-  orderitem.item_id,
+  orderitem.product_id,
   orders.customer_id,
+  orderitem.total_gross_amount_order,
   orderitem.total_amount_order,
-  orderitem.item_quantity,
+  orderitem.product_quantity,
   orders.order_status,
   orders.order_date,
   orders.order_shipped_date,

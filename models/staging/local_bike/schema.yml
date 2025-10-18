@@ -64,8 +64,10 @@ models:
               arguments:
                 to: ref('stg_local_bike__products')
                 field: product_id
+      - name: total_gross_amount_order
+        description: Calculated field -> gross price of the product = (price * quantity) 
       - name: total_amount_order
-        description: Calculated field -> price of the product = (price * quantity) - (price * quantity * discount)
+        description: Calculated field -> price total of the product = (price * quantity) - (price * quantity * discount)
 
   - name: stg_local_bike__orders
     description: This model contains information about orders
